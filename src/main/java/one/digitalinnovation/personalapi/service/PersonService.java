@@ -46,11 +46,11 @@ public class PersonService {
     }
 
     public PersonDTO findById(long id) throws PersonNotFoundException {
-        Optional<Person> optionalPerson= personRepository.findById(id);
-         if (optionalPerson.isEmpty()){
-             throw new PersonNotFoundException(id);
-         }
-        return personMapper.toDTO(optionalPerson.get());
+        Person person = personRepository.findById(id)
+                .orElseThrow(()-> new PersonNotFoundException(id));
+
+
+        return personMapper.toDTO(person);
         //Optional is a object to identify if the base has a specific people
     }
 }
