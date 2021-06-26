@@ -6,12 +6,10 @@ import one.digitalinnovation.personalapi.entity.Person;
 import one.digitalinnovation.personalapi.repository.PersonRepository;
 import one.digitalinnovation.personalapi.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 @RestController
@@ -31,6 +29,9 @@ public class PersonController {
     return personService.createPerson(personDTO);
 
     }
-
+    @GetMapping
+public List<PersonDTO> listAll() {
+     return   personService.listAll();
+}
 
 }

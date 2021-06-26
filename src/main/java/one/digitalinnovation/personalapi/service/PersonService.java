@@ -7,9 +7,12 @@ import one.digitalinnovation.personalapi.mapper.PersonMapper;
 import one.digitalinnovation.personalapi.repository.PersonRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service // - Mark the class like service, the busines laws;
 public class PersonService {
@@ -30,4 +33,13 @@ public class PersonService {
     }
 
 
+
+
+    public List<PersonDTO> listAll() {
+        List<Person> allPeople = personRepository.findAll();
+
+  return allPeople.stream()
+          .map(personMapper::toDTO)
+          .collect(Collectors.toList());
+    }
 }
