@@ -3,6 +3,7 @@ package one.digitalinnovation.personalapi.service;
 import one.digitalinnovation.personalapi.dto.MessageResponseDTO;
 import one.digitalinnovation.personalapi.dto.request.PersonDTO;
 import one.digitalinnovation.personalapi.entity.Person;
+import one.digitalinnovation.personalapi.exception.PersonNotFoundException;
 import one.digitalinnovation.personalapi.mapper.PersonMapper;
 import one.digitalinnovation.personalapi.repository.PersonRepository;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service // - Mark the class like service, the busines laws;
@@ -41,5 +43,14 @@ public class PersonService {
   return allPeople.stream()
           .map(personMapper::toDTO)
           .collect(Collectors.toList());
+    }
+
+    public PersonDTO findById(long id) throws PersonNotFoundException {
+        Optional<Person> optionalPerson= personRepository.findById(id);
+         if (optionalPerson.isEmpty()){
+             throw new PersonNotFoundException(id);
+         }
+        return personMapper.toDTO(optionalPerson.get());
+        //Optional is a object to identify if the base has a specific people
     }
 }
