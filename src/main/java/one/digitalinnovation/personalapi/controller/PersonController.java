@@ -46,7 +46,7 @@ public class PersonController {
             personService.delete(id);
 }
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.CREATED)
+
     public MessageResponseDTO updateById(@PathVariable Long id, @RequestBody PersonDTO personDTO) throws PersonNotFoundException {
         return personService.updateById(id, personDTO);
     }
