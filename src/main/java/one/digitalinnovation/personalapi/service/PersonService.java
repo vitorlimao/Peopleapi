@@ -45,12 +45,23 @@ public class PersonService {
           .collect(Collectors.toList());
     }
 
-    public PersonDTO findById(long id) throws PersonNotFoundException {
-        Person person = personRepository.findById(id)
+    private Person verifyIfExists(Long id) throws PersonNotFoundException {
+        return personRepository.findById(id)
                 .orElseThrow(()-> new PersonNotFoundException(id));
 
 
+
+    }
+
+    public PersonDTO findById(long id) throws PersonNotFoundException {
+        Person person = verifyIfExists(id);
+
+
         return personMapper.toDTO(person);
-        //Optional is a object to identify if the base has a specific people
+    }
+
+    public void delete(Long id) throws PersonNotFoundException {
+        Person person = verifyIfExists(id);
+        personRepository.deleteById(id);
     }
 }
